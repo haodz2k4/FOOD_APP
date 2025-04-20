@@ -2,11 +2,12 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { VersioningType } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
-
+  //swagger 
   const config = new DocumentBuilder()
     .setTitle('TOPCV')
     .setDescription('TRANG WEB TUYEN DUNG VIEC LAM')
@@ -15,6 +16,13 @@ async function bootstrap() {
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api-docs',app, documentFactory);
 
+  //versioning 
+  app.setGlobalPrefix('api') 
+  app.enableVersioning({
+    type: VersioningType.URI,
+    defaultVersion: '1'
+  })
+  
   const PORT = configService.get('PORT')
   await app.listen(PORT);
 }
