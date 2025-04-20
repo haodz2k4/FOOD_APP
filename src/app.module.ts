@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './api/users/users.module';
 import { UserEntity } from './api/users/entities/user.entity';
 import { RolesModule } from './api/roles/roles.module';
+import { RoleEntity } from './api/roles/entities/role.entity';
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { RolesModule } from './api/roles/roles.module';
         username: configService.get<string>('MYSQL_USERNAME'),
         password: configService.get<string>('MYSQL_PASSWORD'),
         database: configService.get<string>('MYSQL_DATABASE'),
-        entities: [UserEntity],
+        entities: [UserEntity, RoleEntity],
         synchronize: false
       })
     }),
