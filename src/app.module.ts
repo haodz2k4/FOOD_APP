@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './api/users/users.module';
 import { UserEntity } from './api/users/entities/user.entity';
+import { RolesModule } from './api/roles/roles.module';
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { UserEntity } from './api/users/entities/user.entity';
       })
     }),
     //API MODULE 
-    UsersModule
+    UsersModule,
+    RolesModule
   ],
   controllers: [],
   providers: [],
