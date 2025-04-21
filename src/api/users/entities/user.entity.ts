@@ -1,7 +1,8 @@
 import { RoleEntity } from "src/api/roles/entities/role.entity";
 import { Gender } from "src/constants/app.constant";
 import { AbstractEntity } from "src/database/entities/abstracts.entity";
-import { Column, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { hashPassword } from "src/utils/password.util";
+import { BeforeInsert, BeforeUpdate, Column, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity('users')
@@ -48,5 +49,13 @@ export class UserEntity extends AbstractEntity {
 
     @DeleteDateColumn()
     deletedAt?: Date;
+
+    @BeforeUpdate()
+    @BeforeInsert()
+    async hashPasswordBeforeInsert() :Promise<void> {
+        if(this.password) {
+            this.password = await hashPassword(this.password);
+        }
+    }
 
 }
