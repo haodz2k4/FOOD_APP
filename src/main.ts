@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { VersioningType } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -22,6 +22,12 @@ async function bootstrap() {
     type: VersioningType.URI,
     defaultVersion: '1'
   })
+
+  //Validation 
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true,
+    whitelist: true 
+  }))
   
   const PORT = configService.get('PORT')
   await app.listen(PORT);
