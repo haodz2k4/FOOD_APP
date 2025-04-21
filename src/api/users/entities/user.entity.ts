@@ -1,6 +1,7 @@
+import { RoleEntity } from "src/api/roles/entities/role.entity";
 import { Gender } from "src/constants/app.constant";
 import { AbstractEntity } from "src/database/entities/abstracts.entity";
-import { Column, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity('users')
@@ -30,10 +31,13 @@ export class UserEntity extends AbstractEntity {
     })
     phone?: string;
 
-    // @Column({
-    //     type: 'int'
-    // })
-    // roleId: number;
+    @Column({
+        length: 36 
+    })
+    roleId: string;
+
+    @ManyToOne(() => RoleEntity, (role) => role.users)
+    role: RoleEntity;
 
     @Column({
         type: 'enum',

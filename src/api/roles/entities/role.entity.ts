@@ -1,5 +1,6 @@
+import { UserEntity } from "src/api/users/entities/user.entity";
 import { AbstractEntity } from "src/database/entities/abstracts.entity";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('roles')
 export class RoleEntity extends AbstractEntity {
@@ -12,5 +13,8 @@ export class RoleEntity extends AbstractEntity {
 
     @Column({nullable: true})
     description?: string;
+
+    @OneToMany(() => UserEntity, (user) => user.role)
+    users: UserEntity[]
     
 }
