@@ -3,12 +3,14 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ResponseUserDto } from './dto/response-user.dto';
+import { Message } from 'src/decorators/message.decorator';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
+  @Message("Create user success")
   create(@Body() createUserDto: CreateUserDto) :Promise<ResponseUserDto> {
     return this.usersService.create(createUserDto);
   }

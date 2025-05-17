@@ -1,8 +1,9 @@
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
+import { TransformInterceptor } from './interceptors/transform.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -28,6 +29,8 @@ async function bootstrap() {
     transform: true,
     whitelist: true 
   }))
+  const reflector = app.get(Reflector)
+  app.useGlobalInterceptors(new TransformInterceptor(reflector))
   
   const PORT = configService.get('PORT')
   await app.listen(PORT);
