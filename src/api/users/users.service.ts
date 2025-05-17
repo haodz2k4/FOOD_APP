@@ -4,6 +4,8 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import { ResponseUserDto } from './dto/response-user.dto';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class UsersService {
@@ -12,8 +14,11 @@ export class UsersService {
 
   }
   
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  async create(createUserDto: CreateUserDto) :Promise<ResponseUserDto> {
+    const user = this.usersRepository.create(createUserDto);
+    await user.save();
+    return plainToInstance(ResponseUserDto, user);
+
   }
 
   findAll() {
