@@ -21,13 +21,15 @@ export class UsersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  @Message("Find user by id")
+  findOne(@Param('id') id: string) :Promise<ResponseUserDto> {
+    return this.usersService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  @Message("Update user by id")
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) :Promise<ResponseUserDto> {
+    return this.usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')
