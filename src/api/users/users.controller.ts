@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ResponseUserDto } from './dto/response-user.dto';
 import { Message } from 'src/decorators/message.decorator';
+import { QueryUserDto } from './dto/query-user.dto';
+import { OffsetPaginatedDto } from 'src/common/dto/offset-pagination/offset-paginated.dto';
 
 @Controller('users')
 export class UsersController {
@@ -16,8 +18,9 @@ export class UsersController {
   }
 
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  @Message("Get many users")
+  findAll(@Query() queryUserDto: QueryUserDto): Promise<OffsetPaginatedDto<ResponseUserDto>> {
+    return this.usersService.findAll(queryUserDto);
   }
 
   @Get(':id')
