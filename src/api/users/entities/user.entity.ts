@@ -1,5 +1,5 @@
 import { RoleEntity } from "src/api/roles/entities/role.entity";
-import { Gender } from "src/constants/app.constant";
+import { Gender, Status } from "src/constants/app.constant";
 import { AbstractEntity } from "src/database/entities/abstracts.entity";
 import { hashPassword } from "src/utils/password.util";
 import { BeforeInsert, BeforeUpdate, Column, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
@@ -49,6 +49,13 @@ export class UserEntity extends AbstractEntity {
 
     @DeleteDateColumn()
     deletedAt?: Date;
+
+    @Column({
+        type: 'enum',
+        enum: Status,
+        default: Status.ACTIVE
+    })
+    status: Status;
 
     @BeforeUpdate()
     @BeforeInsert()
