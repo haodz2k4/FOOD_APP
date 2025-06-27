@@ -1,5 +1,7 @@
-import { Expose } from "class-transformer";
+import { Expose, Type } from "class-transformer";
 import { BaseQueryDto } from "../base-query.dto";
+import { IsNumber, IsOptional, Min } from "class-validator";
+import { DEFAULT_CURRENT_PAGE, DEFAULT_LIMIT } from "src/constants/app.constant";
 
 
 
@@ -8,11 +10,16 @@ import { BaseQueryDto } from "../base-query.dto";
 
 export class OffsetOptionsDto extends BaseQueryDto {
     
-    @Expose()
-    page: number;
-    
-    @Expose()
-    limit: number;
+    @IsNumber()
+    @Type(() => Number)
+    @Min(1)
+    @IsOptional()
+    page: number = DEFAULT_CURRENT_PAGE;
+     
+    @IsNumber()
+    @Type(() => Number)
+    @IsOptional()
+    limit: number = DEFAULT_LIMIT;
 
 
     offset(): number {
