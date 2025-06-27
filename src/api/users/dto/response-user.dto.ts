@@ -1,5 +1,5 @@
 import { Exclude, Expose } from "class-transformer";
-import { Gender } from "src/constants/app.constant";
+import { Gender, Status } from "src/constants/app.constant";
 
 
 @Exclude()
@@ -16,6 +16,9 @@ export class ResponseUserDto {
 
     @Expose()
     phone?: string;
+
+    @Expose()
+    status?: Status;
 
     @Expose()
     email: string;
