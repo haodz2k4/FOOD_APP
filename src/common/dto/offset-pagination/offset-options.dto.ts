@@ -1,11 +1,12 @@
 import { Expose } from "class-transformer";
+import { BaseQueryDto } from "../base-query.dto";
 
 
 
 
 
 
-export class OffsetOptionsDto {
+export class OffsetOptionsDto extends BaseQueryDto {
     
     @Expose()
     page: number;

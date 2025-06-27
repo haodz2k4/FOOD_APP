@@ -3,7 +3,7 @@ import { SortOrder } from "src/constants/app.constant";
 
 
 
-export class QueryDto {
+export class BaseQueryDto {
 
     @IsString()
     @IsOptional()
