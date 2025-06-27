@@ -5,4 +5,9 @@ export enum Gender {
     FEMALE = 'female'
 }
 
-export const RESPONSE_MESSAGE = "response_message"
+export const RESPONSE_MESSAGE = "response_message";
+
+export enum SortOrder {
+    ASC = "asc",
+    DESC = "desc"
+}
