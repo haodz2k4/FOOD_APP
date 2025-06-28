@@ -6,6 +6,7 @@ import { UserEntity } from './api/users/entities/user.entity';
 import { RolesModule } from './api/roles/roles.module';
 import { RoleEntity } from './api/roles/entities/role.entity';
 import { RoleSeedModule } from './database/seeds/role-seed/role-seed.module';
+import { AuthModule } from './api/auth/auth.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { RoleSeedModule } from './database/seeds/role-seed/role-seed.module';
     //API MODULE 
     UsersModule,
     RolesModule,
+    AuthModule,
     //SEED MODULE
     RoleSeedModule
   ],
