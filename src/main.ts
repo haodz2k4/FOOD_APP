@@ -10,8 +10,8 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   //swagger 
   const config = new DocumentBuilder()
-    .setTitle('TOPCV')
-    .setDescription('TRANG WEB TUYEN DUNG VIEC LAM')
+    .setTitle('KFC')
+    .setDescription('DOANH NGHIEP GIAO DO AN')
     .setDescription('1.0')
     .build() 
   const documentFactory = () => SwaggerModule.createDocument(app, config);
