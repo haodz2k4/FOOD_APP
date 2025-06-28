@@ -2,7 +2,8 @@ import { RoleEntity } from "src/api/roles/entities/role.entity";
 import { Gender, Status } from "src/constants/app.constant";
 import { AbstractEntity } from "src/database/entities/abstracts.entity";
 import { hashPassword, verifyPassword } from "src/utils/password.util";
-import { BeforeInsert, BeforeUpdate, Column, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { SessionEntity } from "./session.entity";
 
 
 @Entity('users')
@@ -56,6 +57,9 @@ export class UserEntity extends AbstractEntity {
         default: Status.ACTIVE
     })
     status: Status;
+
+    @OneToMany(() => SessionEntity, (session) => session.user) 
+    sessions: SessionEntity[];
 
     @BeforeUpdate()
     @BeforeInsert()

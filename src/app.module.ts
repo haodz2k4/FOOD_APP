@@ -7,6 +7,7 @@ import { RolesModule } from './api/roles/roles.module';
 import { RoleEntity } from './api/roles/entities/role.entity';
 import { RoleSeedModule } from './database/seeds/role-seed/role-seed.module';
 import { AuthModule } from './api/auth/auth.module';
+import { SessionEntity } from './api/users/entities/session.entity';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { AuthModule } from './api/auth/auth.module';
         username: configService.get<string>('MYSQL_USERNAME'),
         password: configService.get<string>('MYSQL_PASSWORD'),
         database: configService.get<string>('MYSQL_DATABASE'),
-        entities: [UserEntity, RoleEntity],
+        entities: [UserEntity, RoleEntity, SessionEntity],
         synchronize: false
       })
     }),
