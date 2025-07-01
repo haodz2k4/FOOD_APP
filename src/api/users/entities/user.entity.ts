@@ -71,6 +71,6 @@ export class UserEntity extends AbstractEntity {
 
 
     async isMatchPassword(yourPassword: string): Promise<boolean> {
-        return verifyPassword(this.password, yourPassword)
+        return verifyPassword(yourPassword, this.password)
     }
 }
