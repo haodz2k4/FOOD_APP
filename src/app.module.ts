@@ -8,9 +8,12 @@ import { RoleEntity } from './api/roles/entities/role.entity';
 import { RoleSeedModule } from './database/seeds/role-seed/role-seed.module';
 import { AuthModule } from './api/auth/auth.module';
 import { SessionEntity } from './api/users/entities/session.entity';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
+    //JWT MODULE
+    JwtModule.register({global: true}),
     //CONFIG SET UP 
     ConfigModule.forRoot({
       isGlobal: true 
