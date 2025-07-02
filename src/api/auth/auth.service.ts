@@ -7,6 +7,10 @@ import * as ms from 'ms';
 import { ConfigService } from '@nestjs/config';
 import { ResponseLoginDto } from './dto/response-login.dto';
 import { plainToInstance } from 'class-transformer';
+import { RegisterDto } from './dto/register.dto';
+import { ResponseRegisterDto } from './dto/response-register.dto';
+import { RolesService } from '../roles/roles.service';
+import { Role } from 'src/constants/role.constant';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +18,8 @@ export class AuthService {
     constructor(
         private usersService: UsersService,
         private jwtService: JwtService,
-        private configService: ConfigService
+        private configService: ConfigService,
+        private rolesService: RolesService
     ) {}
 
     async signIn(loginDto: LoginDto,ip: string) :Promise<ResponseLoginDto> {
@@ -50,6 +55,16 @@ export class AuthService {
             throw new UnauthorizedException("User status is inactive")
         }
         return user;
+    }
+
+    async register(registerDto: RegisterDto): Promise<ResponseRegisterDto> {
+        const {id} = await this.rolesService.findRoleByName(Role.USER);
+        const user = await this.usersService.create({
+            ...registerDto,
+            roleId: id
+        })
+
+        return plainToInstance(ResponseRegisterDto, user);
     }
 
 
