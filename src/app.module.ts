@@ -9,6 +9,7 @@ import { RoleSeedModule } from './database/seeds/role-seed/role-seed.module';
 import { AuthModule } from './api/auth/auth.module';
 import { SessionEntity } from './api/users/entities/session.entity';
 import { JwtModule } from '@nestjs/jwt';
+import { ProductsModule } from './api/products/products.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { JwtModule } from '@nestjs/jwt';
     UsersModule,
     RolesModule,
     AuthModule,
+    ProductsModule,
     //SEED MODULE
     RoleSeedModule
   ],
