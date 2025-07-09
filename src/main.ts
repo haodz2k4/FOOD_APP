@@ -32,7 +32,7 @@ async function bootstrap() {
   const reflector = app.get(Reflector)
   app.useGlobalInterceptors(new TransformInterceptor(reflector))
   
-  const PORT = configService.get('PORT')
+  const PORT = configService.get('PORT') || 3000
   await app.listen(PORT);
 }
 
