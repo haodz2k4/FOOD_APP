@@ -1,3 +1,4 @@
+import { Status } from "src/constants/app.constant";
 import { AbstractEntity } from "src/database/entities/abstracts.entity";
 import { Column, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
 
@@ -12,6 +13,12 @@ export class CategoryEntity extends AbstractEntity{
 
     @Column({nullable: true})
     description: string;
+
+    @Column({
+        enum: Status,
+        default: Status.ACTIVE
+    })
+    status: Status;
 
     @Column({nullable: true})
     thumbnail: string;

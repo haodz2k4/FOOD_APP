@@ -1,4 +1,5 @@
-import { IsOptional, IsString, IsUrl } from "class-validator";
+import { IsEnum, IsOptional, IsString, IsUrl } from "class-validator";
+import { Status } from "src/constants/app.constant";
 
 
 export class CreateCategoryDto {
@@ -13,4 +14,8 @@ export class CreateCategoryDto {
     @IsUrl()
     @IsOptional()
     thumbnail?: string;
+
+    @IsEnum(Status)
+    @IsOptional()
+    status?: Status;
 }
