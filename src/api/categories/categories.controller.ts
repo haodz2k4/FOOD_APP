@@ -2,13 +2,16 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { ResponseCategoryDto } from './dto/response-category.dto';
+import { Message } from 'src/decorators/message.decorator';
 
 @Controller('categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
   @Post()
-  create(@Body() createCategoryDto: CreateCategoryDto) {
+  @Message("Create category success")
+  create(@Body() createCategoryDto: CreateCategoryDto):Promise<ResponseCategoryDto> {
     return this.categoriesService.create(createCategoryDto);
   }
 
