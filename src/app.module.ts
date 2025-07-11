@@ -10,6 +10,7 @@ import { AuthModule } from './api/auth/auth.module';
 import { SessionEntity } from './api/users/entities/session.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { ProductsModule } from './api/products/products.module';
+import { CategoriesModule } from './api/categories/categories.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { ProductsModule } from './api/products/products.module';
     RolesModule,
     AuthModule,
     ProductsModule,
+    CategoriesModule,
     //SEED MODULE
     RoleSeedModule
   ],
