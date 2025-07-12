@@ -42,12 +42,13 @@ export class UsersService {
   }
 
   async findAll(query: QueryUserDto): Promise<OffsetPaginatedDto<ResponseUserDto>> {
-    const {keyword, status, gender, limit} = query
+    const {keyword, status, gender, limit, sortBy, sortOrder} = query
 
     const queryBuilder = this.usersRepository
       .createQueryBuilder("user")
       .limit(limit)
       .offset(query.offset())
+      .orderBy(`user.${sortBy}`,sortOrder)
     if(keyword) {
       queryBuilder.andWhere("user.fullName LIKE :keyword",{keyword: `%${keyword}%`})
     }
