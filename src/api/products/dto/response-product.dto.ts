@@ -1,6 +1,6 @@
-import { Expose } from "class-transformer";
+import { Exclude, Expose } from "class-transformer";
 
-
+@Exclude()
 export class ResponseProductDto {
 
     @Expose()
@@ -20,4 +20,10 @@ export class ResponseProductDto {
 
     @Expose()
     discountPercentage: number;
+
+    @Expose()
+    createdAt: Date;
+
+    @Expose()
+    updatedAt: Date;
 }

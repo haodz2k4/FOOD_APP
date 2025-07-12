@@ -1,4 +1,5 @@
-import { IsOptional, IsString, IsUrl, IsUUID } from "class-validator";
+import { Type } from "class-transformer";
+import { IsNumber, IsOptional, IsString, IsUrl, IsUUID } from "class-validator";
 
 
 
@@ -15,6 +16,13 @@ export class CreateProductDto {
     @IsOptional()
     thumbnail?: string;
 
+    @IsNumber()
+    @Type(() => Number)
+    price: number;
+
+    @IsNumber()
+    discountPercentage: number;
+    
     @IsUUID()
     categoryId: string;
 
