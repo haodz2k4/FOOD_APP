@@ -1,5 +1,5 @@
 import { IsEnum, IsOptional, IsString } from "class-validator";
-import { SortOrder } from "src/constants/app.constant";
+import { DEFAULT_SORT_BY, DEFAULT_SORT_ORDER, SortOrder } from "src/constants/app.constant";
 
 
 
@@ -11,9 +11,9 @@ export class BaseQueryDto {
 
     @IsString()
     @IsOptional()
-    sortBy?: string;
+    sortBy?: string = DEFAULT_SORT_BY;
 
     @IsEnum(SortOrder)
     @IsOptional()
-    sortOrder?: SortOrder;
+    sortOrder?: SortOrder = DEFAULT_SORT_ORDER;
 }
