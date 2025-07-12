@@ -12,6 +12,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ProductsModule } from './api/products/products.module';
 import { CategoriesModule } from './api/categories/categories.module';
 import { CategoryEntity } from './api/categories/entities/category.entity';
+import { ProductEntity } from './api/products/entities/product.entity';
 
 @Module({
   imports: [
@@ -31,7 +32,7 @@ import { CategoryEntity } from './api/categories/entities/category.entity';
         username: configService.get<string>('MYSQL_USERNAME'),
         password: configService.get<string>('MYSQL_PASSWORD'),
         database: configService.get<string>('MYSQL_DATABASE'),
-        entities: [UserEntity, RoleEntity, SessionEntity, CategoryEntity],
+        entities: [UserEntity, RoleEntity, SessionEntity, CategoryEntity, ProductEntity],
         synchronize: false
       })
     }),

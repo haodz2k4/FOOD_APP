@@ -1,5 +1,6 @@
+import { CategoryEntity } from "src/api/categories/entities/category.entity";
 import { AbstractEntity } from "src/database/entities/abstracts.entity";
-import { Column, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity('products')
@@ -25,4 +26,10 @@ export class ProductEntity extends AbstractEntity {
 
     @DeleteDateColumn()
     deletedAt: Date;
+
+    @ManyToOne(() => CategoryEntity, (category) => category.products) 
+    category: CategoryEntity;
+
+    @Column()
+    categoryId: string;
 }
