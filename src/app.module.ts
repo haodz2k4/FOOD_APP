@@ -13,6 +13,7 @@ import { ProductsModule } from './api/products/products.module';
 import { CategoriesModule } from './api/categories/categories.module';
 import { CategoryEntity } from './api/categories/entities/category.entity';
 import { ProductEntity } from './api/products/entities/product.entity';
+import { ProductImageEntity } from './api/products/entities/product-image.entity';
 
 @Module({
   imports: [
@@ -32,7 +33,7 @@ import { ProductEntity } from './api/products/entities/product.entity';
         username: configService.get<string>('MYSQL_USERNAME'),
         password: configService.get<string>('MYSQL_PASSWORD'),
         database: configService.get<string>('MYSQL_DATABASE'),
-        entities: [UserEntity, RoleEntity, SessionEntity, CategoryEntity, ProductEntity],
+        entities: [UserEntity, RoleEntity, SessionEntity, CategoryEntity, ProductEntity, ProductImageEntity],
         synchronize: false
       })
     }),

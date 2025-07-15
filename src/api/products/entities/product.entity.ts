@@ -1,6 +1,7 @@
 import { CategoryEntity } from "src/api/categories/entities/category.entity";
 import { AbstractEntity } from "src/database/entities/abstracts.entity";
-import { Column, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { ProductImageEntity } from "./product-image.entity";
 
 
 @Entity('products')
@@ -20,6 +21,9 @@ export class ProductEntity extends AbstractEntity {
 
     @Column()
     price: number;
+
+    @OneToMany(() => ProductImageEntity, (img) => img.product)
+    images: ProductImageEntity[]
 
     @Column()
     discountPercentage: number;

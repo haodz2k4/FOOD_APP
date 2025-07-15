@@ -26,6 +26,8 @@ export class ResponseProductDto {
     @Type(() => ResponseCategoryDto)
     category: ResponseCategoryDto;
 
+    @Expose() 
+    images: string[]
 
     @Expose()
     createdAt: Date;
