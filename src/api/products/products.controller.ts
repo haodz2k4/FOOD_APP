@@ -1,7 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { QueryproductDto } from './dto/query-product.dto';
+import { OffsetPaginatedDto } from 'src/common/dto/offset-pagination/offset-paginated.dto';
+import { ResponseProductDto } from './dto/response-product.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -13,8 +16,8 @@ export class ProductsController {
   }
 
   @Get()
-  findAll() {
-    return this.productsService.findAll();
+  findAll(@Query() queryProductDto: QueryproductDto) :Promise<OffsetPaginatedDto<ResponseProductDto>> {
+    return this.productsService.findAll(queryProductDto);
   }
 
   @Get(':id')

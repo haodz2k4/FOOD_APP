@@ -21,5 +21,11 @@ export enum Status {
 export const DEFAULT_CURRENT_PAGE = 1;
 export const DEFAULT_LIMIT = 1000;
 
-export const DEFAULT_SORT_BY = 'createdAt'
-export const DEFAULT_SORT_ORDER = SortOrder.DESC
+export const DEFAULT_SORT_BY = 'createdAt';
+export const DEFAULT_SORT_ORDER = SortOrder.DESC;
+
+export const DEFAULT_MIN_PRICE = 0;
+export const DEFAULT_MAX_PRICE = 100000000; //100.000.000đ (100 milions)
+
+export const DEFAULT_MIN_PERCENTAGE = 0;
+export const DEFAULT_MAX_PERCENTAGE = 100;
