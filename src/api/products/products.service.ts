@@ -31,16 +31,16 @@ export class ProductsService {
       maxDiscountPercentage, 
       limit,
       sortBy,
-      sortOrder
+      sortOrder,
+      categoryId
     } = queryProductDto;
-    console.log(queryProductDto)
     const queryBuilder = this.productsRepository
     .createQueryBuilder("products")
     .limit(limit)
     .offset(queryProductDto.offset())
-    .andWhere("products.price >= :minPrice OR products.price <= :maxPrice",{minPrice,maxPrice})
+    .andWhere("products.price >= :minPrice AND products.price <= :maxPrice",{minPrice,maxPrice})
     .andWhere(
-      "products.discountPercentage >= :minDiscountPercentage OR products.discountPercentage <= :maxDiscountPercentage",{
+      "products.discountPercentage >= :minDiscountPercentage AND products.discountPercentage <= :maxDiscountPercentage",{
         minDiscountPercentage,
         maxDiscountPercentage
     })
@@ -51,6 +51,9 @@ export class ProductsService {
     }
     if(status) {
       queryBuilder.andWhere("status = :status",{status})
+    }
+    if(categoryId) {
+      queryBuilder.andWhere("categoryId = :categoryId",{categoryId})
     }
     const [products, count] = await queryBuilder.getManyAndCount()
     const pagination = new OffsetPaginationDto(count, queryProductDto);
