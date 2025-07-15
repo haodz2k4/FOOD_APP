@@ -74,8 +74,14 @@ export class ProductsService {
     return plainToInstance(ResponseProductDto, product)
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async update(id: string, updateProductDto: UpdateProductDto) :Promise<void> {
+    const product = await this.productsRepository.findOneBy({id});
+    if(!product) {
+      throw new NotFoundException("Product is not found");
+    }
+    Object.assign(product, updateProductDto);
+    await product.save()
+    
   }
 
   remove(id: number) {
