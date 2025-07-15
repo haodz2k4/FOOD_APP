@@ -45,7 +45,8 @@ export class ProductsService {
         maxDiscountPercentage
     })
     .orderBy(`products.${sortBy}`,sortOrder)
-
+    .leftJoin("products.category","category")
+    .addSelect(["category.id","category.title"])
     if(keyword) {
       queryBuilder.andWhere("title LIKE :keyword",{keyword: `%${keyword}%`})
     }

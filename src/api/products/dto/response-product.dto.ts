@@ -1,4 +1,5 @@
-import { Exclude, Expose } from "class-transformer";
+import { Exclude, Expose, Type } from "class-transformer";
+import { ResponseCategoryDto } from "src/api/categories/dto/response-category.dto";
 
 @Exclude()
 export class ResponseProductDto {
@@ -20,6 +21,11 @@ export class ResponseProductDto {
 
     @Expose()
     discountPercentage: number;
+
+    @Expose()
+    @Type(() => ResponseCategoryDto)
+    category: ResponseCategoryDto;
+
 
     @Expose()
     createdAt: Date;

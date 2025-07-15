@@ -12,10 +12,10 @@ export class ResponseCategoryDto {
     title: string;
 
     @Expose()
-    description: string;
+    description?: string;
 
     @Expose()
-    thumbnail: string;
+    thumbnail?: string;
 
     @Expose()
     createdAt: Date;
