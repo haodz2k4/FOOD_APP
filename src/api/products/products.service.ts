@@ -81,10 +81,14 @@ export class ProductsService {
     }
     Object.assign(product, updateProductDto);
     await product.save()
-    
+
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(id: string) :Promise<void> {
+    const product = await this.productsRepository.findOneBy({id});
+    if(!product) {
+      throw new NotFoundException("Product is not found");
+    }
+    await product.softRemove()
   }
 }
