@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -61,8 +61,17 @@ export class ProductsService {
     return new OffsetPaginatedDto(plainToInstance(ResponseProductDto, products), pagination);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findOne(id: string): Promise<ResponseProductDto> {
+    console.log(id)
+    const product = await this.productsRepository.createQueryBuilder("product")
+    .where("product.id = :id",{id})
+    .leftJoin("product.category","category")
+    .addSelect(["category.id","category.title"])
+    .getOne()
+    if(!product) {
+      throw new NotFoundException("Product is not found")
+    }
+    return plainToInstance(ResponseProductDto, product)
   }
 
   update(id: number, updateProductDto: UpdateProductDto) {
