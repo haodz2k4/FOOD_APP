@@ -1,6 +1,7 @@
 import { AbstractEntity } from "src/database/entities/abstracts.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { ProductEntity } from "./product.entity";
+import { OptionValueEntity } from "./option_value.entity";
 
 
 
@@ -18,5 +19,8 @@ export class ProductOptionEntity extends AbstractEntity{
 
     @ManyToOne(() => ProductEntity, (product) => product.options)
     product: ProductEntity;
+
+    @OneToMany(() => OptionValueEntity, (value) => value.option)
+    values: OptionValueEntity[]
     
 }

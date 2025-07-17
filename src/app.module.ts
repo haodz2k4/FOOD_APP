@@ -15,6 +15,7 @@ import { CategoryEntity } from './api/categories/entities/category.entity';
 import { ProductEntity } from './api/products/entities/product.entity';
 import { ProductImageEntity } from './api/products/entities/product-image.entity';
 import { ProductOptionEntity } from './api/products/entities/product-options.entity';
+import { OptionValueEntity } from './api/products/entities/option_value.entity';
 
 @Module({
   imports: [
@@ -41,7 +42,8 @@ import { ProductOptionEntity } from './api/products/entities/product-options.ent
           CategoryEntity, 
           ProductEntity, 
           ProductImageEntity,
-          ProductOptionEntity
+          ProductOptionEntity,
+          OptionValueEntity
         ],
         synchronize: false
       })
