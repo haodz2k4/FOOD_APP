@@ -9,15 +9,28 @@ import { ResponseProductDto } from './dto/response-product.dto';
 import { QueryproductDto } from './dto/query-product.dto';
 import { OffsetPaginationDto } from 'src/common/dto/offset-pagination/offset-pagination.dto';
 import { OffsetPaginatedDto } from 'src/common/dto/offset-pagination/offset-paginated.dto';
+import { ProductOptionService } from './product-option.service';
 
 @Injectable()
 export class ProductsService {
 
-  constructor(@InjectRepository(ProductEntity) private productsRepository: Repository<ProductEntity>) {}
+  constructor(
+    @InjectRepository(ProductEntity) private productsRepository: Repository<ProductEntity>,
+    private productOptionService: ProductOptionService
+  ) {}
 
   async create(createProductDto: CreateProductDto) :Promise<ResponseProductDto> {
-    const product = this.productsRepository.create(createProductDto);
-    await product.save()
+    const {title, description, thumbnail, price, discountPercentage, categoryId, options} = createProductDto
+    
+    const product = this.productsRepository.create({
+      title, 
+      description, 
+      thumbnail, 
+      price, 
+      discountPercentage, 
+      categoryId
+    });
+    Promise.all([product.save(), this.productOptionService.create(product.id, options)])
     return plainToInstance(ResponseProductDto, product);
   }
 
