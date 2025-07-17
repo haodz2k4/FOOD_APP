@@ -63,6 +63,8 @@ export class ProductsService {
     })
     .orderBy(`products.${sortBy}`,sortOrder)
     .leftJoin("products.category","category")
+    .leftJoinAndSelect("products.options","options")
+    .leftJoinAndSelect("options.values","values")
     .addSelect(["category.id","category.title"])
     if(keyword) {
       queryBuilder.andWhere("title LIKE :keyword",{keyword: `%${keyword}%`})
