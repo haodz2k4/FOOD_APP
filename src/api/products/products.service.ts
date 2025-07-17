@@ -30,8 +30,12 @@ export class ProductsService {
       discountPercentage, 
       categoryId
     });
-    Promise.all([product.save(), this.productOptionService.create(product.id, options)])
-    return plainToInstance(ResponseProductDto, product);
+    await product.save()
+    const responseOptions = await this.productOptionService.create(product.id, options)
+    return plainToInstance(ResponseProductDto, {
+      ...product,
+      options: responseOptions
+    });
   }
 
   async findAll(queryProductDto: QueryproductDto) :Promise<OffsetPaginatedDto<ResponseProductDto>> {
