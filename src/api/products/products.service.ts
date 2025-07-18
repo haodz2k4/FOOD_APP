@@ -67,13 +67,13 @@ export class ProductsService {
     .leftJoinAndSelect("options.values","values")
     .addSelect(["category.id","category.title"])
     if(keyword) {
-      queryBuilder.andWhere("title LIKE :keyword",{keyword: `%${keyword}%`})
+      queryBuilder.andWhere("products.title LIKE :keyword",{keyword: `%${keyword}%`})
     }
     if(status) {
-      queryBuilder.andWhere("status = :status",{status})
+      queryBuilder.andWhere("products.status = :status",{status})
     }
     if(categoryId) {
-      queryBuilder.andWhere("categoryId = :categoryId",{categoryId})
+      queryBuilder.andWhere("products.categoryId = :categoryId",{categoryId})
     }
     const [products, count] = await queryBuilder.getManyAndCount()
     const pagination = new OffsetPaginationDto(count, queryProductDto);
