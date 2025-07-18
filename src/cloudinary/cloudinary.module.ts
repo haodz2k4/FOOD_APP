@@ -8,6 +8,7 @@ import { ConfigService } from '@nestjs/config';
   controllers: [],
   providers: [CloudinaryService, {
     provide: CLOUDINARY,
+    inject: [ConfigService],
     useFactory: (configService: ConfigService) => 
       v2.config({
         cloud_name: configService.get<string>('CLOUDINARY_CLOUD_NAME'),
@@ -15,5 +16,6 @@ import { ConfigService } from '@nestjs/config';
         api_secret: configService.get<string>('CLOUDINARY_API_SECRET')
       })
   }],
+  exports: [CloudinaryService]
 })
 export class CloudinaryModule {}
