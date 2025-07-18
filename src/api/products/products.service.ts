@@ -81,7 +81,6 @@ export class ProductsService {
   }
 
   async findOne(id: string): Promise<ResponseProductDto> {
-    console.log(id)
     const product = await this.productsRepository.createQueryBuilder("product")
     .where("product.id = :id",{id})
     .leftJoin("product.category","category")

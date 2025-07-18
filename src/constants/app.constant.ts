@@ -29,3 +29,5 @@ export const DEFAULT_MAX_PRICE = 100000000; //100.000.000đ (100 milions)
 
 export const DEFAULT_MIN_PERCENTAGE = 0;
 export const DEFAULT_MAX_PERCENTAGE = 100;
+
+export const IS_PUBLIC_KEY = 'IS_PUBLIC_KEY'

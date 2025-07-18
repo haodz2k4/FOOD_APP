@@ -18,6 +18,8 @@ import { ProductOptionEntity } from './api/products/entities/product-options.ent
 import { OptionValueEntity } from './api/products/entities/option_value.entity';
 import { UploadsModule } from './api/uploads/uploads.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @Module({
   imports: [
@@ -62,6 +64,11 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
     RoleSeedModule
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard
+    }
+  ],
 })
 export class AppModule {}
