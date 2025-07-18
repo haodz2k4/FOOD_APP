@@ -25,4 +25,24 @@ export class AuthController {
   register(@Body() registerDto: RegisterDto): Promise<ResponseRegisterDto> {
     return this.authService.register(registerDto)
   }
+
+  @Post('refresh')
+  refresh() {
+
+  }
+
+  @Post('forgot-password')
+  forgotPassword() {
+
+  }
+
+  @Post('verify') 
+  verify() {
+
+  }
+
+  @Post('reset-password')
+  resetPassword() {
+    
+  }
 }

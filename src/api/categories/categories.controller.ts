@@ -29,7 +29,7 @@ export class CategoriesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
+  update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) :Promise<ResponseCategoryDto> {
     return this.categoriesService.update(id, updateCategoryDto);
   }
 
