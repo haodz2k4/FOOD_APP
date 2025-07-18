@@ -16,6 +16,8 @@ import { ProductEntity } from './api/products/entities/product.entity';
 import { ProductImageEntity } from './api/products/entities/product-image.entity';
 import { ProductOptionEntity } from './api/products/entities/product-options.entity';
 import { OptionValueEntity } from './api/products/entities/option_value.entity';
+import { UploadsModule } from './api/uploads/uploads.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 @Module({
   imports: [
@@ -54,6 +56,8 @@ import { OptionValueEntity } from './api/products/entities/option_value.entity';
     AuthModule,
     ProductsModule,
     CategoriesModule,
+    UploadsModule,
+    CloudinaryModule,
     //SEED MODULE
     RoleSeedModule
   ],

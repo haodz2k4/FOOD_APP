@@ -1,4 +1,4 @@
-
+export const CLOUDINARY = 'CLOUDINARY'
 
 export enum Gender {
     MALE = 'male',
