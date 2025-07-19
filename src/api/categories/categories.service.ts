@@ -58,7 +58,8 @@ export class CategoriesService {
     return plainToInstance(ResponseCategoryDto, category);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} category`;
+  async remove(id: string) : Promise<void> {
+    await this.findOne(id); 
+    await this.categoriesRepository.softDelete(id);
   }
 }
