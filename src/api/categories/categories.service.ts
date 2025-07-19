@@ -40,8 +40,12 @@ export class CategoriesService {
     return new OffsetPaginatedDto(plainToInstance(ResponseCategoryDto, categories), offsetPagination)
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} category`;
+  async findOne(id: string) :Promise<ResponseCategoryDto> {
+    const category = await this.categoriesRepository.findOneBy({id});
+    if(!category) {
+      throw new NotFoundException("Category is not found")
+    }
+    return plainToInstance(ResponseCategoryDto, category);
   }
 
   async update(id: string, updateCategoryDto: UpdateCategoryDto) {

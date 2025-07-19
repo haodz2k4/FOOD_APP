@@ -24,8 +24,8 @@ export class CategoriesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.categoriesService.findOne(+id);
+  findOne(@Param('id') id: string) :Promise<ResponseCategoryDto> {
+    return this.categoriesService.findOne(id);
   }
 
   @Patch(':id')
