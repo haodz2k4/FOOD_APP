@@ -4,6 +4,7 @@ import { AbstractEntity } from "src/database/entities/abstracts.entity";
 import { hashPassword, verifyPassword } from "src/utils/password.util";
 import { BeforeInsert, BeforeUpdate, Column, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { SessionEntity } from "./session.entity";
+import { OrderEntity } from "src/api/orders/entities/order.entity";
 
 
 @Entity('users')
@@ -57,6 +58,9 @@ export class UserEntity extends AbstractEntity {
         default: Status.ACTIVE
     })
     status: Status;
+
+    @OneToMany(() => OrderEntity, (order) => order.user)
+    orders: OrderEntity[];
 
     @OneToMany(() => SessionEntity, (session) => session.user) 
     sessions: SessionEntity[];

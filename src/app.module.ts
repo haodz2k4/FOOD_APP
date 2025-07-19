@@ -20,6 +20,7 @@ import { UploadsModule } from './api/uploads/uploads.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { OrderEntity } from './api/orders/entities/order.entity';
 
 @Module({
   imports: [
@@ -47,7 +48,8 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
           ProductEntity, 
           ProductImageEntity,
           ProductOptionEntity,
-          OptionValueEntity
+          OptionValueEntity,
+          OrderEntity
         ],
         synchronize: false
       })

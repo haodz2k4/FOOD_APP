@@ -31,3 +31,9 @@ export const DEFAULT_MIN_PERCENTAGE = 0;
 export const DEFAULT_MAX_PERCENTAGE = 100;
 
 export const IS_PUBLIC_KEY = 'IS_PUBLIC_KEY'
+
+export enum OrderStatus {
+    PENDING = 'pending',
+    DONE = 'done',
+    PREPARING = 'preparing'
+}
