@@ -21,6 +21,7 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { OrderEntity } from './api/orders/entities/order.entity';
+import { RestaurantEntity } from './api/restaurants/entities/restaurant.entity';
 
 @Module({
   imports: [
@@ -49,7 +50,8 @@ import { OrderEntity } from './api/orders/entities/order.entity';
           ProductImageEntity,
           ProductOptionEntity,
           OptionValueEntity,
-          OrderEntity
+          OrderEntity,
+          RestaurantEntity
         ],
         synchronize: false
       })

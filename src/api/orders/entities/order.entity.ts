@@ -1,3 +1,4 @@
+import { RestaurantEntity } from "src/api/restaurants/entities/restaurant.entity";
 import { UserEntity } from "src/api/users/entities/user.entity";
 import { OrderStatus } from "src/constants/app.constant";
 import { AbstractEntity } from "src/database/entities/abstracts.entity";
@@ -27,4 +28,10 @@ export class OrderEntity extends AbstractEntity {
 
     @ManyToOne(() => UserEntity, user => user.orders)
     user: UserEntity;
+
+    @Column()
+    restaurantId: string;
+
+    @ManyToOne(() => UserEntity, restaurant => restaurant.orders)
+    restaurant: RestaurantEntity;
 }
