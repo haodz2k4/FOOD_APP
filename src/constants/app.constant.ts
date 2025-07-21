@@ -37,3 +37,8 @@ export enum OrderStatus {
     DONE = 'done',
     PREPARING = 'preparing'
 }
+
+export enum PaymentMethod {
+    COD = 'cod',
+    CREDIT_CARD = 'credit_card',
+}
