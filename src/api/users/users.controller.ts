@@ -6,11 +6,17 @@ import { ResponseUserDto } from './dto/response-user.dto';
 import { Message } from 'src/decorators/message.decorator';
 import { QueryUserDto } from './dto/query-user.dto';
 import { OffsetPaginatedDto } from 'src/common/dto/offset-pagination/offset-paginated.dto';
+import { User } from 'src/decorators/user.decorator';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Get('me')
+  currentUser(@User('id') id: string): Promise<ResponseUserDto> {
+    return this.usersService.findOne(id);
+  }
+  
   @Post()
   @Message("Create user success")
   create(@Body() createUserDto: CreateUserDto) :Promise<ResponseUserDto> {
