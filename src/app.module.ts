@@ -24,6 +24,7 @@ import { OrderEntity } from './api/orders/entities/order.entity';
 import { RestaurantEntity } from './api/restaurants/entities/restaurant.entity';
 import { OrderItemEntity } from './api/orders/entities/order-items.entity';
 import { OrdersModule } from './api/orders/orders.module';
+import { MomoModule } from './api/momo/momo.module';
 
 @Module({
   imports: [
@@ -68,6 +69,7 @@ import { OrdersModule } from './api/orders/orders.module';
     UploadsModule,
     CloudinaryModule,
     OrdersModule,
+    MomoModule,
     //SEED MODULE
     RoleSeedModule
   ],
