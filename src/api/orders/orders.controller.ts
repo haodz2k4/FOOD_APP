@@ -11,7 +11,7 @@ export class OrdersController {
 
   @Post()
   @Public()
-  create(@Body() createOrderDto: CreateOrderDto, @User('id') id: string) {
+  create(@Body() createOrderDto: CreateOrderDto, @User('userId') id: string) {
     return this.ordersService.create(createOrderDto, id);
   }
 

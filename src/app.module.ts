@@ -23,6 +23,7 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { OrderEntity } from './api/orders/entities/order.entity';
 import { RestaurantEntity } from './api/restaurants/entities/restaurant.entity';
 import { OrderItemEntity } from './api/orders/entities/order-items.entity';
+import { OrdersModule } from './api/orders/orders.module';
 
 @Module({
   imports: [
@@ -66,6 +67,7 @@ import { OrderItemEntity } from './api/orders/entities/order-items.entity';
     CategoriesModule,
     UploadsModule,
     CloudinaryModule,
+    OrdersModule,
     //SEED MODULE
     RoleSeedModule
   ],

@@ -41,7 +41,7 @@ export class ProductEntity extends AbstractEntity {
 
     @Column()
     categoryId: string;
-
-    @ManyToOne(() => OrderItemEntity, (orders) => orders.product)
+ 
+    @OneToMany(() => OrderItemEntity, (items) => items.product)
     orders: OrderItemEntity[]
 }

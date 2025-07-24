@@ -13,9 +13,6 @@ export class OrderItemEntity extends AbstractEntity {
     productId: string;
 
     @Column()
-    orderId: string;
-
-    @Column()
     quantity: number;
 
     @Column()
