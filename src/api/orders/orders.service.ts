@@ -14,7 +14,7 @@ export class OrdersService {
     @InjectRepository(ProductEntity) private productsRepository: Repository<ProductEntity>
   ) {}
   async create(createOrderDto: CreateOrderDto, userId: string) {
-    const { address, restaurantId, paymentMethod, items } = createOrderDto;
+    const { address, restaurantId, paymentMethod, items, status } = createOrderDto;
 
     const productIds = items.map((item) => item.productId);
 
@@ -33,6 +33,7 @@ export class OrdersService {
 
     const order = this.ordersRepository.create({
       address,
+      status,
       restaurantId,
       paymentMethod,
       userId,
