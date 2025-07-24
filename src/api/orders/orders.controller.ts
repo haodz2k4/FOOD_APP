@@ -2,14 +2,17 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
+import { Public } from 'src/decorators/public.decorator';
+import { User } from 'src/decorators/user.decorator';
 
 @Controller('orders')
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
   @Post()
-  create(@Body() createOrderDto: CreateOrderDto) {
-    return this.ordersService.create(createOrderDto);
+  @Public()
+  create(@Body() createOrderDto: CreateOrderDto, @User('id') id: string) {
+    return this.ordersService.create(createOrderDto, id);
   }
 
   @Get()

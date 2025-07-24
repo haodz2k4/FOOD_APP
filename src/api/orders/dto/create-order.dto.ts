@@ -1,4 +1,5 @@
-import { IsOptional, IsString, IsUUID } from "class-validator";
+import { IsArray, IsOptional, IsString, IsUUID } from "class-validator";
+import { CreateOrderItemDto } from "./create-order-item.dto";
 
 
 export class CreateOrderDto {
@@ -12,4 +13,7 @@ export class CreateOrderDto {
 
     @IsUUID()
     restaurantId: string;
+
+    @IsArray()
+    items: CreateOrderItemDto[];
 }
