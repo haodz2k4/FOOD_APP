@@ -3,6 +3,7 @@ import { AbstractEntity } from "src/database/entities/abstracts.entity";
 import { Column, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { ProductImageEntity } from "./product-image.entity";
 import { ProductOptionEntity } from "./product-options.entity";
+import { OrderItemEntity } from "src/api/orders/entities/order-items.entity";
 
 
 @Entity('products')
@@ -40,4 +41,7 @@ export class ProductEntity extends AbstractEntity {
 
     @Column()
     categoryId: string;
+
+    @ManyToOne(() => OrderItemEntity, (orders) => orders.product)
+    orders: OrderItemEntity[]
 }
