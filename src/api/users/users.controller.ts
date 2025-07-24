@@ -7,12 +7,14 @@ import { Message } from 'src/decorators/message.decorator';
 import { QueryUserDto } from './dto/query-user.dto';
 import { OffsetPaginatedDto } from 'src/common/dto/offset-pagination/offset-paginated.dto';
 import { User } from 'src/decorators/user.decorator';
+import { Public } from 'src/decorators/public.decorator';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get('me')
+  @Public()
   currentUser(@User('id') id: string): Promise<ResponseUserDto> {
     return this.usersService.findOne(id);
   }
