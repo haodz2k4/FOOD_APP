@@ -21,5 +21,10 @@ export class ResponseOrderDto {
     @Type(() => ResponseOrderItemDto)
     items: ResponseOrderItemDto[]
 
+    @Expose()
+    createdAt: Date;
+    
+    @Expose()
+    updatedAt: Date;
 
 }

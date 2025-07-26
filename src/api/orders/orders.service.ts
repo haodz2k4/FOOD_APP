@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -8,6 +8,8 @@ import { ProductEntity } from '../products/entities/product.entity';
 import { ResponseOrderDto } from './dto/response-order.dto';
 import { plainToInstance } from 'class-transformer';
 import { OrderItemEntity } from './entities/order-items.entity';
+import { OrderStatus } from 'src/constants/app.constant';
+import { ResponseUpdateStatus } from './dto/response-update-status.dto';
 
 @Injectable()
 export class OrdersService {
@@ -26,7 +28,6 @@ export class OrdersService {
     where: { id: In(productIds) },
   });
 
-  // Tạo order trước
   const order = this.ordersRepository.create({
     address,
     status,
@@ -37,7 +38,6 @@ export class OrdersService {
   });
   const savedOrder = await this.ordersRepository.save(order);
 
-  // Tạo và lưu các OrderItemEntity
   const orderItems = products.map((product) => {
     const matchingItem = items.find((i) => i.productId === product.id);
 
@@ -86,9 +86,23 @@ export class OrdersService {
         thumbnail: item.product?.thumbnail,
         price: item.price.toString(),
       })),
+      createdAt: order.createdAt,
+      updatedAt: order.updatedAt
     });
   });
 }
+
+  async updateStatus(id: string, status: OrderStatus) :Promise<ResponseUpdateStatus> {
+    console.log(status)
+    const order = await this.ordersRepository.findOneBy({id});
+    if(!order) {
+      throw new NotFoundException("Order is not found");
+    }
+    order.status = status;
+    await order.save()
+    console.log(order)
+    return plainToInstance(ResponseUpdateStatus, order)
+  }
 
 
   findOne(id: number) {
