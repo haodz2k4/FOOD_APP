@@ -29,6 +29,7 @@ export class AuthService {
             ip,
             userId: user.id
         })
+        const {title} = await this.rolesService.findOne(user.roleId)
         const [accessToken, refreshToken] = await Promise.all([
             this.generateAccessToken(user.id, session.id),
             this.generateRefreshToken(user.id, session.id)
@@ -38,7 +39,9 @@ export class AuthService {
             id: user.id,
             accessToken,
             refreshToken,
-            expiresIn: ms(this.configService.get<ms.StringValue>('JWT_ACCESS_EXPIRES')) / 1000
+            expiresIn: ms(this.configService.get<ms.StringValue>('JWT_ACCESS_EXPIRES')) / 1000,
+            user,
+            role: title
         })
 
     }

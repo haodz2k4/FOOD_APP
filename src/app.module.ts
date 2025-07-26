@@ -26,6 +26,8 @@ import { OrderItemEntity } from './api/orders/entities/order-items.entity';
 import { OrdersModule } from './api/orders/orders.module';
 import { MomoModule } from './api/momo/momo.module';
 import { SocketModule } from './socket/socket.module';
+import { CartModule } from './api/cart/cart.module';
+import { CartEntity } from './api/cart/entities/cart.entity';
 
 @Module({
   imports: [
@@ -56,7 +58,8 @@ import { SocketModule } from './socket/socket.module';
           OptionValueEntity,
           OrderEntity,
           RestaurantEntity,
-          OrderItemEntity
+          OrderItemEntity,
+          CartEntity
         ],
         synchronize: false
       })
@@ -71,6 +74,7 @@ import { SocketModule } from './socket/socket.module';
     CloudinaryModule,
     OrdersModule,
     MomoModule,
+    CartModule,
     //SEED MODULE
     RoleSeedModule,
     SocketModule

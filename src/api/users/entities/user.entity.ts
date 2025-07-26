@@ -2,9 +2,10 @@ import { RoleEntity } from "src/api/roles/entities/role.entity";
 import { Gender, Status } from "src/constants/app.constant";
 import { AbstractEntity } from "src/database/entities/abstracts.entity";
 import { hashPassword, verifyPassword } from "src/utils/password.util";
-import { BeforeInsert, BeforeUpdate, Column, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, DeleteDateColumn, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { SessionEntity } from "./session.entity";
 import { OrderEntity } from "src/api/orders/entities/order.entity";
+import { CartEntity } from "src/api/cart/entities/cart.entity";
 
 
 @Entity('users')
@@ -59,6 +60,9 @@ export class UserEntity extends AbstractEntity {
     })
     status: Status;
 
+    @OneToOne(() => CartEntity, (cart) => cart.user)
+    cart: CartEntity; 
+
     @OneToMany(() => OrderEntity, (order) => order.user)
     orders: OrderEntity[];
 
@@ -77,4 +81,5 @@ export class UserEntity extends AbstractEntity {
     async isMatchPassword(yourPassword: string): Promise<boolean> {
         return verifyPassword(yourPassword, this.password)
     }
+
 }

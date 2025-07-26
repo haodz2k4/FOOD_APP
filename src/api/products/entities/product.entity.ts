@@ -4,6 +4,7 @@ import { Column, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGenerate
 import { ProductImageEntity } from "./product-image.entity";
 import { ProductOptionEntity } from "./product-options.entity";
 import { OrderItemEntity } from "src/api/orders/entities/order-items.entity";
+import { CartItemEntity } from "src/api/cart/entities/cart-item.entity";
 
 
 @Entity('products')
@@ -43,5 +44,8 @@ export class ProductEntity extends AbstractEntity {
     categoryId: string;
  
     @OneToMany(() => OrderItemEntity, (items) => items.product)
-    orders: OrderItemEntity[]
+    orders: OrderItemEntity[];
+
+    @OneToMany(() => CartItemEntity, (cartItem) => cartItem.product)
+    cartItems: CartItemEntity[];
 }
