@@ -6,6 +6,9 @@ import { RefreshTokenInterceptor } from 'src/interceptors/refresh-token.intercep
 import { RegisterDto } from './dto/register.dto';
 import { ResponseRegisterDto } from './dto/response-register.dto';
 import { Message } from 'src/decorators/message.decorator';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { VerifyOtpDto } from './dto/verify-otp.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -32,17 +35,17 @@ export class AuthController {
   }
 
   @Post('forgot-password')
-  forgotPassword() {
-
+  forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
+    return this.authService.forgotPassword(forgotPasswordDto)
   }
 
   @Post('verify') 
-  verify() {
-
+  verify(@Body() verifyOtpDto: VerifyOtpDto) {
+    return this.authService.verify(verifyOtpDto);
   }
 
   @Post('reset-password')
-  resetPassword() {
+  resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
     
   }
 }

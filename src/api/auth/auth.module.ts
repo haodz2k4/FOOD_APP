@@ -4,11 +4,13 @@ import { AuthController } from './auth.controller';
 import { UsersModule } from '../users/users.module';
 import { RolesModule } from '../roles/roles.module';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { MailModule } from 'src/mail/mail.module';
 
 @Module({
   imports: [
     UsersModule,
-    RolesModule
+    RolesModule,
+    MailModule
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],

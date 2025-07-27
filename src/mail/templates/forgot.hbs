@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gửi mã OTP</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #fdf6e3; /* Be vàng nhẹ */
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .email-wrapper {
+      width: 100%;
+      padding: 40px 0;
+      background-color: #fdf6e3;
+    }
+
+    .email-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      border-radius: 10px;
+      padding: 40px 30px;
+      text-align: center;
+      border: 1px solid #e5dcc5;
+    }
+
+    h2 {
+      color: #5c4033; /* Nâu đậm */
+      margin-bottom: 10px;
+      font-size: 24px;
+    }
+
+    p {
+      color: #4b3621; /* Nâu */
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .otp-code {
+      display: inline-block;
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 10px;
+      color: #ffffff;
+      background-color: #a1866f; /* Nâu nhạt */
+      padding: 14px 26px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      user-select: all;
+    }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 13px;
+      color: #a1866f;
+    }
+
+    @media (max-width: 600px) {
+      .otp-code {
+        font-size: 24px;
+        letter-spacing: 6px;
+      }
+
+      .email-container {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="email-wrapper">
+    <div class="email-container">
+      <h2>Mã xác thực OTP</h2>
+      <p>Chúng tôi đã nhận yêu cầu đặt lại mật khẩu cho tài khoản của bạn.</p>
+      <p>Vui lòng sử dụng mã bên dưới để xác minh:</p>
+
+      <div class="otp-code">{{ otp }}</div>
+
+      <p>Mã có hiệu lực trong <strong>5 phút</strong>. Nếu bạn không yêu cầu, hãy bỏ qua email này.</p>
+
+      <div class="footer">
+        © 2025 Ứng dụng của bạn. Mọi quyền được bảo lưu.
+      </div>
+    </div>
+  </div>
+</body>
+</html>

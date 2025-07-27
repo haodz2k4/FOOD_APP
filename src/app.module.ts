@@ -28,9 +28,24 @@ import { MomoModule } from './api/momo/momo.module';
 import { SocketModule } from './socket/socket.module';
 import { CartModule } from './api/cart/cart.module';
 import { CartEntity } from './api/cart/entities/cart.entity';
+import { MailModule } from './mail/mail.module';
+import { CacheModule } from '@nestjs/cache-manager';
+import { CartItemEntity } from './api/cart/entities/cart-item.entity';
+import * as redisStore from 'cache-manager-ioredis';
 
 @Module({
   imports: [
+     CacheModule.register({
+      isGlobal: true,
+      store: redisStore,
+      host: process.env.REDIS_HOST,
+      port: process.env.REDIS_PORT,
+      username: process.env.REDIS_USERNAME,
+      password:process.env.REDIS_PASSWORD,
+      ttl: 300
+
+      
+     }),
     //JWT MODULE
     JwtModule.register({global: true}),
     //CONFIG SET UP 
@@ -59,7 +74,8 @@ import { CartEntity } from './api/cart/entities/cart.entity';
           OrderEntity,
           RestaurantEntity,
           OrderItemEntity,
-          CartEntity
+          CartEntity,
+          CartItemEntity
         ],
         synchronize: false
       })
@@ -77,7 +93,8 @@ import { CartEntity } from './api/cart/entities/cart.entity';
     CartModule,
     //SEED MODULE
     RoleSeedModule,
-    SocketModule
+    SocketModule,
+    MailModule
   ],
   controllers: [],
   providers: [

@@ -2,24 +2,17 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { CartService } from './cart.service';
 import { CreateCartDto } from './dto/create-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
+import { Public } from 'src/decorators/public.decorator';
+import { User } from 'src/decorators/user.decorator';
 
+@Public()
 @Controller('cart')
 export class CartController {
   constructor(private readonly cartService: CartService) {}
-
-  @Post()
-  create(@Body() createCartDto: CreateCartDto) {
-    return this.cartService.create(createCartDto);
-  }
-
+  
   @Get()
-  findAll() {
-    return this.cartService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.cartService.findOne(+id);
+  findOneByUserId(@User('userId') userId: string) {
+    return this.cartService.findOne(userId);
   }
 
   @Patch(':id')

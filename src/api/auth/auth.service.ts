@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
 import { UsersService } from '../users/users.service';
 import { Status } from 'src/constants/app.constant';
@@ -11,6 +11,11 @@ import { RegisterDto } from './dto/register.dto';
 import { ResponseRegisterDto } from './dto/response-register.dto';
 import { RolesService } from '../roles/roles.service';
 import { Role } from 'src/constants/role.constant';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { MailService } from 'src/mail/mail.service';
+import { Cache, CACHE_MANAGER } from '@nestjs/cache-manager';
+import { VerifyOtpDto } from './dto/verify-otp.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 @Injectable()
 export class AuthService {
@@ -19,7 +24,9 @@ export class AuthService {
         private usersService: UsersService,
         private jwtService: JwtService,
         private configService: ConfigService,
-        private rolesService: RolesService
+        private rolesService: RolesService,
+        private mailService: MailService,
+        @Inject(CACHE_MANAGER) private cache: Cache
     ) {}
 
     async signIn(loginDto: LoginDto,ip: string) :Promise<ResponseLoginDto> {
@@ -46,6 +53,15 @@ export class AuthService {
 
     }
 
+    async forgotPassword(forgotPasswordDto: ForgotPasswordDto): Promise<void> {
+        const {email} = forgotPasswordDto;
+        const user = await this.usersService.findUserByEmail(email);
+        if(!user) {
+            throw new NotFoundException("email is not found")
+        }
+        await this.mailService.sendOtp(email);
+    }
+
     async validateUser(email: string, password: string) {
         //1. Find user is exists with email sended
         const user = await this.usersService.findUserByEmail(email);
@@ -60,6 +76,19 @@ export class AuthService {
         return user;
     }
 
+    async verify(verifyOtpDto: VerifyOtpDto) {
+        const {email, otp} = verifyOtpDto;
+        const user = await  this.usersService.findUserByEmail(email);
+        if(!user) {
+            throw new NotFoundException("Email is not found")
+        }
+        const otpCode = await this.cache.get(`auth:forgot:${email}`);
+        if(!otpCode || otpCode !== otp) {
+            throw new UnauthorizedException("Invalid otp code")
+        }
+        
+    }
+
     async register(registerDto: RegisterDto): Promise<ResponseRegisterDto> {
         const {id} = await this.rolesService.findRoleByName(Role.USER);
         const user = await this.usersService.create({
@@ -68,6 +97,17 @@ export class AuthService {
         })
 
         return plainToInstance(ResponseRegisterDto, user);
+    }
+
+    async resetPassword(dto: ResetPasswordDto) {
+        const {email, password} = dto;
+        const user = await this.usersService.findUserByEmail(email);
+        if(!user) {
+            throw new NotFoundException("User is not found");
+        }
+        user.password = password;
+        await user.save();
+        
     }
 
 
