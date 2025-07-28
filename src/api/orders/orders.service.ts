@@ -10,6 +10,7 @@ import { plainToInstance } from 'class-transformer';
 import { OrderItemEntity } from './entities/order-items.entity';
 import { OrderStatus } from 'src/constants/app.constant';
 import { ResponseUpdateStatus } from './dto/response-update-status.dto';
+import { QueryOrderDto } from './dto/query-order.dto';
 
 @Injectable()
 export class OrdersService {
@@ -62,16 +63,22 @@ export class OrdersService {
 }
 
 
- async findAll(): Promise<ResponseOrderDto[]> {
+ async findAll(query: QueryOrderDto): Promise<ResponseOrderDto[]> {
+  const {userId, status} = query
   const orders = await this.ordersRepository.find({
     relations: {
       items: {
         product: true,
       },
+      user: true
     },
     order: {
       createdAt: 'DESC',
     },
+    where: {
+      userId,
+      status
+    }
   });
 
   return orders.map(order => {
@@ -80,6 +87,7 @@ export class OrdersService {
       status: order.status,
       address: order.address,
       notes: order.notes,
+      user: order.user,
       items: order.items.map(item => ({
         quantity: item.quantity.toString(),
         title: item.product?.title,
