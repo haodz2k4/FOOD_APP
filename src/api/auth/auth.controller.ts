@@ -9,6 +9,7 @@ import { Message } from 'src/decorators/message.decorator';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { VerifyOtpDto } from './dto/verify-otp.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
+import { RegisterGoogleDto } from './dto/register-google.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -27,6 +28,11 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   register(@Body() registerDto: RegisterDto): Promise<ResponseRegisterDto> {
     return this.authService.register(registerDto)
+  }
+
+  @Post("register-google")
+  registerGoogle(registerGoogleDto: RegisterGoogleDto) {
+    return this.authService.registerGoogle(registerGoogleDto);
   }
 
   @Post('refresh')

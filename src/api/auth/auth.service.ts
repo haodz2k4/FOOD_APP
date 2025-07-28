@@ -1,7 +1,8 @@
+import { Repository } from 'typeorm';
 import { Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
 import { UsersService } from '../users/users.service';
-import { Status } from 'src/constants/app.constant';
+import { Providers, Status } from 'src/constants/app.constant';
 import { JwtService } from '@nestjs/jwt';
 import * as ms from 'ms';
 import { ConfigService } from '@nestjs/config';
@@ -16,6 +17,11 @@ import { MailService } from 'src/mail/mail.service';
 import { Cache, CACHE_MANAGER } from '@nestjs/cache-manager';
 import { VerifyOtpDto } from './dto/verify-otp.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { OrderEntity } from '../orders/entities/order.entity';
+import { ProviderEntity } from '../users/entities/provider.entity';
+import { RegisterGoogleDto } from './dto/register-google.dto';
+import { UserEntity } from '../users/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -26,8 +32,50 @@ export class AuthService {
         private configService: ConfigService,
         private rolesService: RolesService,
         private mailService: MailService,
-        @Inject(CACHE_MANAGER) private cache: Cache
+        @Inject(CACHE_MANAGER) private cache: Cache,
+        @InjectRepository(ProviderEntity) private providerRepository: Repository<ProviderEntity>,
+        @InjectRepository(UserEntity) private userRepository: Repository<UserEntity>
     ) {}
+
+    async registerGoogle(dto: RegisterGoogleDto) {
+        const {email, fullName, providerId} = dto;
+        const {id} = await this.rolesService.findRoleByName(Role.USER);
+        const user = await this.userRepository.create({roleId: id ,email, fullName}).save()
+
+        await this.providerRepository.create({
+            userId: user.id,
+            provider: Providers.GOOGLE,
+            providerId
+        })
+
+    }
+
+    async loginGoogle(email: string) {
+        const user = await this.usersService.findUserByEmail(email);
+        if(!user) {
+            throw new NotFoundException("User is not found")
+        }
+        const session = await this.usersService.createSession({
+            ip: '123456',
+            userId: user.id
+        })
+        const isExists = await this.providerRepository.findOneBy({
+            userId: user.id
+        })
+        if(!isExists) {
+            throw new UnauthorizedException("You have not registered with a Google account.")
+        }
+
+        const [accessToken, refreshToken] = await Promise.all([
+            this.generateAccessToken(user.id, session.id),
+            this.generateRefreshToken(user.id, session.id)
+        ])
+        return {
+            accessToken,
+            refreshToken
+        }
+
+    }
 
     async signIn(loginDto: LoginDto,ip: string) :Promise<ResponseLoginDto> {
         const {email, password} = loginDto;

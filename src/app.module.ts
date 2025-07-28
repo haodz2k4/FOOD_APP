@@ -32,6 +32,7 @@ import { MailModule } from './mail/mail.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { CartItemEntity } from './api/cart/entities/cart-item.entity';
 import * as redisStore from 'cache-manager-ioredis';
+import { ProviderEntity } from './api/users/entities/provider.entity';
 
 @Module({
   imports: [
@@ -75,7 +76,8 @@ import * as redisStore from 'cache-manager-ioredis';
           RestaurantEntity,
           OrderItemEntity,
           CartEntity,
-          CartItemEntity
+          CartItemEntity,
+          ProviderEntity
         ],
         synchronize: false
       })

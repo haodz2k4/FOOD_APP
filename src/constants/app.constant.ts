@@ -42,3 +42,9 @@ export enum PaymentMethod {
     COD = 'cod',
     CREDIT_CARD = 'credit_card',
 }
+
+export enum Providers {
+    GOOGLE = 'google',
+    FACEBOOK = 'facebook',
+    GITHUB = 'github'
+}
