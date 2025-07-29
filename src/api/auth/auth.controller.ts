@@ -31,8 +31,13 @@ export class AuthController {
   }
 
   @Post("register-google")
-  registerGoogle(registerGoogleDto: RegisterGoogleDto) {
+  registerGoogle(@Body() registerGoogleDto: RegisterGoogleDto) {
     return this.authService.registerGoogle(registerGoogleDto);
+  }
+
+  @Post("login-google")
+  loginGoogle(@Body('email') email: string) {
+    return this.authService.loginGoogle(email);
   }
 
   @Post('refresh')

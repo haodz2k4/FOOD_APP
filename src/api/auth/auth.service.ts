@@ -46,7 +46,7 @@ export class AuthService {
             userId: user.id,
             provider: Providers.GOOGLE,
             providerId
-        })
+        }).save()
 
     }
 
