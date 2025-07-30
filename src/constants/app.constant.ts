@@ -35,7 +35,9 @@ export const IS_PUBLIC_KEY = 'IS_PUBLIC_KEY'
 export enum OrderStatus {
     PENDING = 'pending',
     DONE = 'done',
-    PREPARING = 'preparing'
+    PREPARING = 'preparing',
+    PAID = 'paid',
+    CANCELLED = 'cancelled'
 }
 
 export enum PaymentMethod {

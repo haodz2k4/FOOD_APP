@@ -33,6 +33,7 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { CartItemEntity } from './api/cart/entities/cart-item.entity';
 import * as redisStore from 'cache-manager-ioredis';
 import { ProviderEntity } from './api/users/entities/provider.entity';
+import { RestaurantsModule } from './api/restaurants/restaurants.module';
 
 @Module({
   imports: [
@@ -93,6 +94,7 @@ import { ProviderEntity } from './api/users/entities/provider.entity';
     OrdersModule,
     MomoModule,
     CartModule,
+    RestaurantsModule,
     //SEED MODULE
     RoleSeedModule,
     SocketModule,

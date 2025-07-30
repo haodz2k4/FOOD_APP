@@ -14,8 +14,8 @@ export class RestaurantsService {
     return 'This action adds a new restaurant';
   }
 
-  findAll() {
-    return this.restaurantRepository.find();
+  async findAll() {
+    return await this.restaurantRepository.find();
   }
 
   findOne(id: number) {
