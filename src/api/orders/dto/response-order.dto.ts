@@ -27,7 +27,7 @@ export class ResponseOrderDto {
     items: ResponseOrderItemDto[]
 
     @Expose()
-    total: number;
+    total: string;
 
     @Expose()
     createdAt: Date;
