@@ -43,7 +43,7 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayInit, OnGate
     this.logger.log(id, status)
     const updatedOrder = await this.ordersService.updateStatus(id, status);
 
-    this.server.emit(SocketOrder.UPDATE, {
+    this.server.emit(SocketOrder.UPDATED, {
       id: updatedOrder.id,
       status: updatedOrder.status,
     });

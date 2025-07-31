@@ -82,22 +82,28 @@ export class OrdersService {
   });
 
   return orders.map(order => {
-    return plainToInstance(ResponseOrderDto, {
-      id: order.id,
-      status: order.status,
-      address: order.address,
-      notes: order.notes,
-      user: order.user,
-      items: order.items.map(item => ({
-        quantity: item.quantity.toString(),
-        title: item.product?.title,
-        thumbnail: item.product?.thumbnail,
-        price: item.price.toString(),
-      })),
-      createdAt: order.createdAt,
-      updatedAt: order.updatedAt
-    });
+  const total = order.items.reduce((sum, item) => {
+    return sum + item.price * item.quantity;
+  }, 0);
+
+  return plainToInstance(ResponseOrderDto, {
+    id: order.id,
+    status: order.status,
+    address: order.address,
+    notes: order.notes,
+    user: order.user,
+    total: total.toString(), // 👈 Thêm dòng này
+    items: order.items.map(item => ({
+      quantity: item.quantity.toString(),
+      title: item.product?.title,
+      thumbnail: item.product?.thumbnail,
+      price: item.price.toString(),
+    })),
+    createdAt: order.createdAt,
+    updatedAt: order.updatedAt
   });
+});
+
 }
 
   async updateStatus(id: string, status: OrderStatus) :Promise<ResponseUpdateStatus> {
