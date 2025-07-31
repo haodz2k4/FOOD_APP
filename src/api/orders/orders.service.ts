@@ -92,7 +92,7 @@ export class OrdersService {
     address: order.address,
     notes: order.notes,
     user: order.user,
-    total: total.toString(), // 👈 Thêm dòng này
+    total: total, // 👈 Thêm dòng này
     items: order.items.map(item => ({
       quantity: item.quantity.toString(),
       title: item.product?.title,
