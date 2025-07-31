@@ -8,6 +8,9 @@ import { OrderEntity } from '../orders/entities/order.entity';
 import { ProductEntity } from '../products/entities/product.entity';
 import { OrderStatus } from 'src/constants/app.constant';
 import * as dayjs from 'dayjs';
+import { Between } from 'typeorm';
+
+
 @Injectable()
 export class StatiticsService {
   
@@ -48,41 +51,42 @@ export class StatiticsService {
 }
 
 
-async profit() {
-  const completedOrders = await this.ordersRepository.find({
-    where: { status: OrderStatus.DONE },
-    relations: ['items'],
-  });
+  async profit() {
+    const today = dayjs();
+    const startDate = today.subtract(29, 'day').startOf('day');
+    const endDate = today.endOf('day');
 
-  // Duyệt qua các đơn hàng và nhóm theo tháng
-  const monthlyRevenueMap = new Map<string, number>();
+    const completedOrders = await this.ordersRepository.find({
+      where: {
+        status: OrderStatus.DONE,
+        createdAt: Between(startDate.toDate(), endDate.toDate()),
+      },
+      relations: ['items'],
+    });
 
-  completedOrders.forEach(order => {
-    const orderDate = dayjs(order.createdAt); // hoặc order.updatedAt nếu bạn xử lý sau giao hàng
-    const monthKey = orderDate.format('YYYY-MM'); // Ví dụ: '2025-07'
-
-    const orderRevenue = order.items.reduce((sum, item) => {
-      return sum + item.price * item.quantity;
-    }, 0);
-
-    if (monthlyRevenueMap.has(monthKey)) {
-      monthlyRevenueMap.set(monthKey, monthlyRevenueMap.get(monthKey)! + orderRevenue);
-    } else {
-      monthlyRevenueMap.set(monthKey, orderRevenue);
+    // Tạo map mặc định 30 ngày gần nhất với revenue = 0
+    const dailyRevenueMap = new Map<string, number>();
+    for (let i = 0; i < 30; i++) {
+      const dateKey = startDate.add(i, 'day').format('YYYY-MM-DD');
+      dailyRevenueMap.set(dateKey, 0);
     }
-  });
 
-  // Chuyển map sang mảng đối tượng để trả ra
-  const result = Array.from(monthlyRevenueMap.entries()).map(([month, revenue]) => ({
-    month,
-    revenue,
-  }));
+    // Cộng dồn doanh thu theo từng ngày
+    completedOrders.forEach(order => {
+      const dateKey = dayjs(order.createdAt).format('YYYY-MM-DD');
+      const revenue = order.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      if (dailyRevenueMap.has(dateKey)) {
+        dailyRevenueMap.set(dateKey, dailyRevenueMap.get(dateKey)! + revenue);
+      }
+    });
 
-  // Sắp xếp theo thời gian tăng dần
-  result.sort((a, b) => a.month.localeCompare(b.month));
+    // Trả về mảng để render biểu đồ
+    const result = Array.from(dailyRevenueMap.entries()).map(([date, revenue]) => ({
+      date,
+      revenue,
+    }));
 
-  return result;
-}
-
+    return result;
+  }
 
 }
