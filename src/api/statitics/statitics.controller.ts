@@ -12,7 +12,7 @@ export class StatiticsController {
     return this.statiticsService.general()
   }
 
-  @Get('profit')
+  @Get('revenue')
   profit() {
     return this.statiticsService.profit()
   }
