@@ -15,7 +15,7 @@ export class MomoService {
     ) {}
 
     async payment(createPaymentDto: CreatePaymentDto, userId: string) {
-        const { items, address, restaurantId, notes } = createPaymentDto;
+        const { items, address, restaurantId, notes, phone } = createPaymentDto;
         
         const partnerCode = this.configService.get<string>('MOMO_PARTNER_CODE');
         const accessKey = this.configService.get<string>('MOMO_ACCESS_KEY');
@@ -27,6 +27,7 @@ export class MomoService {
             status: OrderStatus.PENDING,
             address,
             notes,
+            phone,
             restaurantId,
             items,
         }, userId);

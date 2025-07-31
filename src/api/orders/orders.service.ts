@@ -22,7 +22,7 @@ export class OrdersService {
   ) {}
   async create(createOrderDto: CreateOrderDto, userId: string) {
   const { address, restaurantId, paymentMethod, items, status, notes, phone } = createOrderDto;
-
+  console.log(phone)
   const productIds = items.map((item) => item.productId);
 
   const products = await this.productsRepository.find({

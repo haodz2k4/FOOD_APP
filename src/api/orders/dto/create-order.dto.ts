@@ -15,7 +15,7 @@ export class CreateOrderDto {
     @IsUUID()
     restaurantId: string;
 
-    @IsPhoneNumber()
+    @IsString()
     phone: string
 
     @IsOptional()
