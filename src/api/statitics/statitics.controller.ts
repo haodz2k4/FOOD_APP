@@ -11,4 +11,9 @@ export class StatiticsController {
   general() {
     return this.statiticsService.general()
   }
+
+  @Get('profit')
+  profit() {
+    return this.statiticsService.profit()
+  }
 }

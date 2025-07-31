@@ -7,7 +7,7 @@ import { Repository } from 'typeorm';
 import { OrderEntity } from '../orders/entities/order.entity';
 import { ProductEntity } from '../products/entities/product.entity';
 import { OrderStatus } from 'src/constants/app.constant';
-
+import * as dayjs from 'dayjs';
 @Injectable()
 export class StatiticsService {
   
@@ -46,5 +46,43 @@ export class StatiticsService {
     productCount,
   };
 }
+
+
+async profit() {
+  const completedOrders = await this.ordersRepository.find({
+    where: { status: OrderStatus.DONE },
+    relations: ['items'],
+  });
+
+  // Duyệt qua các đơn hàng và nhóm theo tháng
+  const monthlyRevenueMap = new Map<string, number>();
+
+  completedOrders.forEach(order => {
+    const orderDate = dayjs(order.createdAt); // hoặc order.updatedAt nếu bạn xử lý sau giao hàng
+    const monthKey = orderDate.format('YYYY-MM'); // Ví dụ: '2025-07'
+
+    const orderRevenue = order.items.reduce((sum, item) => {
+      return sum + item.price * item.quantity;
+    }, 0);
+
+    if (monthlyRevenueMap.has(monthKey)) {
+      monthlyRevenueMap.set(monthKey, monthlyRevenueMap.get(monthKey)! + orderRevenue);
+    } else {
+      monthlyRevenueMap.set(monthKey, orderRevenue);
+    }
+  });
+
+  // Chuyển map sang mảng đối tượng để trả ra
+  const result = Array.from(monthlyRevenueMap.entries()).map(([month, revenue]) => ({
+    month,
+    revenue,
+  }));
+
+  // Sắp xếp theo thời gian tăng dần
+  result.sort((a, b) => a.month.localeCompare(b.month));
+
+  return result;
+}
+
 
 }
