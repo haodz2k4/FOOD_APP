@@ -21,7 +21,7 @@ export class OrdersService {
     @InjectRepository(OrderItemEntity) private orderItemsRepository: Repository<OrderItemEntity>
   ) {}
   async create(createOrderDto: CreateOrderDto, userId: string) {
-  const { address, restaurantId, paymentMethod, items, status, notes } = createOrderDto;
+  const { address, restaurantId, paymentMethod, items, status, notes, phone } = createOrderDto;
 
   const productIds = items.map((item) => item.productId);
 
@@ -36,6 +36,7 @@ export class OrdersService {
     restaurantId,
     paymentMethod,
     userId,
+    phone
   });
   const savedOrder = await this.ordersRepository.save(order);
 
@@ -92,6 +93,7 @@ export class OrdersService {
     address: order.address,
     notes: order.notes,
     user: order.user,
+    phone: order.phone,
     total: total, // 👈 Thêm dòng này
     items: order.items.map(item => ({
       quantity: item.quantity.toString(),

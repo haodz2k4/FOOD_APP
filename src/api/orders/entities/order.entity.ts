@@ -25,6 +25,9 @@ export class OrderEntity extends AbstractEntity {
     notes: string;
 
     @Column()
+    phone: string;
+
+    @Column()
     userId: string;
 
     @ManyToOne(() => UserEntity, user => user.orders)

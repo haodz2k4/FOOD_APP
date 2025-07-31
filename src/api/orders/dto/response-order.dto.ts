@@ -20,6 +20,9 @@ export class ResponseOrderDto {
     user: ResponseUserDto
 
     @Expose()
+    phone: string;
+
+    @Expose()
     notes: string;
 
     @Expose()

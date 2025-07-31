@@ -1,4 +1,4 @@
-import { IsArray, IsEnum, IsOptional, IsString, IsUUID } from "class-validator";
+import { IsArray, IsEnum, IsOptional, IsPhoneNumber, IsString, IsUUID } from "class-validator";
 import { CreateOrderItemDto } from "./create-order-item.dto";
 import { OrderStatus, PaymentMethod } from "src/constants/app.constant";
 
@@ -14,6 +14,9 @@ export class CreateOrderDto {
 
     @IsUUID()
     restaurantId: string;
+
+    @IsPhoneNumber()
+    phone: string
 
     @IsOptional()
     @IsEnum(OrderStatus)
