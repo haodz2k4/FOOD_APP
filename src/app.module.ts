@@ -34,6 +34,7 @@ import { CartItemEntity } from './api/cart/entities/cart-item.entity';
 import * as redisStore from 'cache-manager-ioredis';
 import { ProviderEntity } from './api/users/entities/provider.entity';
 import { RestaurantsModule } from './api/restaurants/restaurants.module';
+import { StatiticsModule } from './api/statitics/statitics.module';
 
 @Module({
   imports: [
@@ -95,6 +96,7 @@ import { RestaurantsModule } from './api/restaurants/restaurants.module';
     MomoModule,
     CartModule,
     RestaurantsModule,
+    StatiticsModule,
     //SEED MODULE
     RoleSeedModule,
     SocketModule,

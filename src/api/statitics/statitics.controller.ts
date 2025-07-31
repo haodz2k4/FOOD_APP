@@ -7,28 +7,8 @@ import { UpdateStatiticDto } from './dto/update-statitic.dto';
 export class StatiticsController {
   constructor(private readonly statiticsService: StatiticsService) {}
 
-  @Post()
-  create(@Body() createStatiticDto: CreateStatiticDto) {
-    return this.statiticsService.create(createStatiticDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.statiticsService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.statiticsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStatiticDto: UpdateStatiticDto) {
-    return this.statiticsService.update(+id, updateStatiticDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.statiticsService.remove(+id);
+  @Get('general')
+  general() {
+    return this.statiticsService.general()
   }
 }
