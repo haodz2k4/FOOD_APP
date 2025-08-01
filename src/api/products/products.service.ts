@@ -26,15 +26,16 @@ export class ProductsService {
       title, 
       description, 
       thumbnail, 
-      price, 
+      price,  
       discountPercentage, 
       categoryId
     });
     await product.save()
-    const responseOptions = await this.productOptionService.create(product.id, options)
+    if(options) {
+      const responseOptions = await this.productOptionService.create(product.id, options)
+    }
     return plainToInstance(ResponseProductDto, {
-      ...product,
-      options: responseOptions
+      ...product
     });
   }
 

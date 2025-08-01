@@ -24,7 +24,7 @@ export class RolesService {
   async findAll() {
     return await  this.rolesRepository
     .createQueryBuilder('role')
-    
+    .getMany()
   }
 
   async findOne(id: string) {
