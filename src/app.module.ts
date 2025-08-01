@@ -35,9 +35,21 @@ import * as redisStore from 'cache-manager-ioredis';
 import { ProviderEntity } from './api/users/entities/provider.entity';
 import { RestaurantsModule } from './api/restaurants/restaurants.module';
 import { StatiticsModule } from './api/statitics/statitics.module';
+import { BullModule } from '@nestjs/bullmq';
 
 @Module({
   imports: [
+       BullModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        connection: {
+          host: configService.get<string>('REDIS_HOST'),
+          port: configService.get<number>('REDIS_PORT'),
+          username: configService.get<string>('REDIS_USERNAME'),
+          password: configService.get<string>('REDIS_PASSWORD')
+        }
+      })
+    }),
      CacheModule.register({
       isGlobal: true,
       store: redisStore,

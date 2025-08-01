@@ -1,6 +1,9 @@
 import { MailerService } from '@nestjs-modules/mailer';
+import { InjectQueue } from '@nestjs/bullmq';
 import { Cache, CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Inject, Injectable } from '@nestjs/common';
+import { Queue } from 'bullmq';
+import { JobEnum } from 'src/constants/job.enum';
 import { generateRandomNumber } from 'src/utils/generate.util';
 
 @Injectable()
@@ -8,7 +11,8 @@ export class MailService {
 
     constructor(
         private mailerService: MailerService,
-        @Inject(CACHE_MANAGER) private cacheManager: Cache
+        @Inject(CACHE_MANAGER) private cacheManager: Cache,
+        @InjectQueue('mail') private mailQueue: Queue
     ) {}
 
     async sendOtp(email: string): Promise<void> {
@@ -16,7 +20,7 @@ export class MailService {
         try {
             await this.cacheManager.set(`auth:forgot:${email}`, otp, 300);
 
-            await this.mailerService.sendMail({
+            await this.mailQueue.add(JobEnum.SEND_OTP,{
             to: email,
             subject: 'Xác thực mã Otp',
             template: './forgot.hbs',

@@ -4,6 +4,8 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { ConfigService } from '@nestjs/config';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { join } from 'path';
+import { MailProcessor } from './mail.processor';
+import { BullModule } from '@nestjs/bullmq';
 
 @Module({
   imports: [
@@ -25,9 +27,12 @@ import { join } from 'path';
             }
           }
         })
+    }),
+    BullModule.registerQueue({
+      name: 'mail' 
     })
   ],
-  providers: [MailService],
+  providers: [MailService, MailProcessor],
   exports: [MailService]
 })
 export class MailModule {}

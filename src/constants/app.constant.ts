@@ -50,3 +50,11 @@ export enum Providers {
     FACEBOOK = 'facebook',
     GITHUB = 'github'
 }
+
+export enum PermissionAction {
+    C = 'CREATE',
+    R = 'READ',
+    U = 'UPDATE',
+    D = 'DELETE'
+
+}

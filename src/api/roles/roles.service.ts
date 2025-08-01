@@ -9,7 +9,9 @@ import { Role } from 'src/constants/role.constant';
 @Injectable()
 export class RolesService {
 
-  constructor(@InjectRepository(RoleEntity) private rolesRepository: Repository<RoleEntity>) {}
+  constructor(
+    @InjectRepository(RoleEntity) private rolesRepository: Repository<RoleEntity>
+  ) {}
 
   findRoleByName(name: Role) {
     return this.rolesRepository.findOneBy({title: name})
@@ -19,8 +21,10 @@ export class RolesService {
     return 'This action adds a new role';
   }
 
-  findAll() {
-    return `This action returns all roles`;
+  async findAll() {
+    return await  this.rolesRepository
+    .createQueryBuilder('role')
+    
   }
 
   async findOne(id: string) {
