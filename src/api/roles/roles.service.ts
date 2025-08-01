@@ -22,10 +22,42 @@ export class RolesService {
   }
 
   async findAll() {
-    return await  this.rolesRepository
-    .createQueryBuilder('role')
-    .getMany()
-  }
+  const roles = [
+    {
+      title: 'admin',
+      permissions: [
+        'user_read',
+        'user_write',
+        'user_delete',
+        'order_read',
+        'order_update',
+        'order_delete',
+        'product_create',
+        'product_update',
+        'product_delete',
+        'category_manage',
+        'report_view',
+        'dashboard_access',
+        'analytics_view',
+        'settings_update',
+        'role_manage',
+        'permission_assign',
+        'notification_send',
+        'email_manage',
+        'backup_access',
+        'log_view',
+        'system_monitor',
+      ],
+    },
+    {
+      title: 'user',
+      permissions: [], // hoặc không có trường này luôn cũng được
+    }
+  ];
+
+  return roles;
+}
+
 
   async findOne(id: string) {
     const role = await this.rolesRepository.findOneBy({id});
