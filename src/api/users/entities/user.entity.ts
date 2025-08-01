@@ -6,6 +6,7 @@ import { BeforeInsert, BeforeUpdate, Column, DeleteDateColumn, Entity, ManyToOne
 import { SessionEntity } from "./session.entity";
 import { OrderEntity } from "src/api/orders/entities/order.entity";
 import { CartEntity } from "src/api/cart/entities/cart.entity";
+import { Role } from "src/constants/role.constant";
 
 
 @Entity('users')

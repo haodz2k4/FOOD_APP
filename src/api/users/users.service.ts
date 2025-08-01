@@ -49,6 +49,7 @@ export class UsersService {
       .limit(limit)
       .offset(query.offset())
       .orderBy(`user.${sortBy}`,sortOrder)
+      .leftJoinAndSelect('user.role','role')
     if(keyword) {
       queryBuilder.andWhere("user.fullName LIKE :keyword",{keyword: `%${keyword}%`})
     }
