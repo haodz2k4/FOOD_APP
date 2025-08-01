@@ -24,7 +24,7 @@ export class MomoService {
 
         const order = await this.ordersService.create( {
             paymentMethod: PaymentMethod.CREDIT_CARD,
-            status: OrderStatus.PENDING,
+            status: OrderStatus.PAID,
             address,
             notes,
             phone,
