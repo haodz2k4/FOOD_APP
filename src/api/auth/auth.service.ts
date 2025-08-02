@@ -131,9 +131,6 @@ export class AuthService {
             throw new NotFoundException("Email is not found")
         }
         const otpCode = await this.cache.get(`auth:forgot:${email}`);
-        if(!otpCode || otpCode !== otp) {
-            throw new UnauthorizedException("Invalid otp code")
-        }
         
     }
 
